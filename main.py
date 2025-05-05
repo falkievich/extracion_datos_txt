@@ -21,7 +21,11 @@ def mostrar_resultados(text_widget):
                 continue
             lleno_pct = (estado["lleno"] / total) * 100
             vacio_pct = (estado["vacio"] / total) * 100
-            text_widget.insert(tk.END, f"{campo.upper()}: {total} campos - {lleno_pct:.1f}% lleno, {vacio_pct:.1f}% vacío\n")
+            text_widget.insert(
+                tk.END,
+                f"{campo.upper()}: {total} campos - {lleno_pct:.1f}% lleno ({estado['lleno']} campos), "
+                f"{vacio_pct:.1f}% vacío ({estado['vacio']} campos)\n"
+            )
         text_widget.insert(tk.END, "\n")
 
     text_widget.insert(tk.END, "=== Otros campos en 'materia' ===\n")
@@ -31,7 +35,11 @@ def mostrar_resultados(text_widget):
             continue
         lleno_pct = (estado["lleno"] / total) * 100
         vacio_pct = (estado["vacio"] / total) * 100
-        text_widget.insert(tk.END, f"{campo}: {total} campos - {lleno_pct:.1f}% lleno, {vacio_pct:.1f}% vacío\n")
+        text_widget.insert(
+            tk.END,
+            f"{campo}: {total} campos - {lleno_pct:.1f}% lleno ({estado['lleno']} campos), "
+            f"{vacio_pct:.1f}% vacío ({estado['vacio']} campos)\n"
+        )
 
     text_widget.insert(tk.END, "\n=== Otros campos fuera de 'materia' ===\n")
     for campo, estado in otros_fuera.items():
@@ -40,9 +48,13 @@ def mostrar_resultados(text_widget):
             continue
         lleno_pct = (estado["lleno"] / total) * 100
         vacio_pct = (estado["vacio"] / total) * 100
-        text_widget.insert(tk.END, f"{campo}: {total} campos - {lleno_pct:.1f}% lleno, {vacio_pct:.1f}% vacío\n")
+        text_widget.insert(
+            tk.END,
+            f"{campo}: {total} campos - {lleno_pct:.1f}% lleno ({estado['lleno']} campos), "
+            f"{vacio_pct:.1f}% vacío ({estado['vacio']} campos)\n"
+        )
 
-    # Opcional: Mostrar gráfico con campos principales
+    # Gráfico con campos principales y materia
     campos_interes = {c: conteo[c] for c in campos_principales + campos_materia_estaticos}
     graficar_datos(campos_interes)
 
