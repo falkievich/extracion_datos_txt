@@ -124,6 +124,7 @@
   {
     "nombre": "Carlos",
     "apellido": "",
+    "carrera": "Ing. en Sistemas",
     "materia": {
       "codigo": "FIS105",
       "descripcion": "Física General",
