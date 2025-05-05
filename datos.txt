@@ -1,0 +1,150 @@
+[
+  {
+    "nombre": "Juan",
+    "apellido": "Pérez",
+    "materia": {
+      "codigo": "MAT101",
+      "descripcion": "Matemática básica",
+      "año": "2022",
+      "nivel": "Básico",
+      "comentario": "Requiere trabajo práctico",
+      "profesor": "Dr. Rodríguez",
+      "horario": "Lunes y Miércoles 10:00-12:00"
+    }
+  },
+  {
+    "nombre": "",
+    "apellido": "Gómez",
+    "materia": {
+      "codigo": "",
+      "descripcion": "",
+      "nivel": "",
+      "comentario": "Requiere conocimientos previos",
+      "profesor": "M. López",
+      "horario": "Martes y Jueves 14:00-16:00",
+      "año": ""
+    }
+  },
+  {
+    "nombre": "Lucía",
+    "apellido": "",
+    "materia": {
+      "codigo": "HIS201",
+      "descripcion": "Historia Argentina",
+      "comentario": "",
+      "profesor": "",
+      "horario": "Viernes 9:00-11:00",
+      "salon": "A",
+      "nivel": "Intermedio"
+    }
+  },
+  {
+    "nombre": "",
+    "apellido": "",
+    "materia": {
+      "codigo": "FIS303",
+      "descripcion": "Física avanzada",
+      "año": "2022",
+      "nivel": "",
+      "comentario": "",
+      "profesor": "Dr. García",
+      "horario": "Jueves 16:00-18:00",
+      "ubicacion": "Lavalle 50"
+    }
+  },
+  {
+    "nombre": "Ana",
+    "apellido": "Sánchez",
+    "materia": {
+      "codigo": "BIO150",
+      "descripcion": "",
+      "año": "2023",
+      "nivel": "Básico",
+      "comentario": "Se recomienda asistir a clases prácticas",
+      "profesor": "M. Pérez",
+      "horario": "Lunes 8:00-10:00",
+      "material": "Manual de Biología",
+      "director": "thiago f"
+    }
+  },
+  {
+    "nombre": "Pedro",
+    "apellido": "González",
+    "materia": {
+      "codigo": "MAT201",
+      "descripcion": "Cálculo Diferencial",
+      "año": "2023",
+      "nivel": "Intermedio",
+      "comentario": "Es necesario tener conocimientos previos de álgebra",
+      "profesor": "Dr. Fernández",
+      "horario": "Lunes 14:00-16:00",
+      "material": ""
+    }
+  },
+  {
+    "nombre": "María",
+    "apellido": "",
+    "materia": {
+      "codigo": "QUI301",
+      "descripcion": "Química Orgánica",
+      "año": "2022",
+      "nivel": "Avanzado",
+      "comentario": "Laboratorio obligatorio",
+      "profesor": "Dr. Ramírez",
+      "horario": "Miércoles y Viernes 11:00-13:00"
+    }
+  },
+  {
+    "nombre": "",
+    "apellido": "Rodríguez",
+    "materia": {
+      "codigo": "",
+      "descripcion": "",
+      "año": "2023",
+      "nivel": "Básico",
+      "comentario": "Para todos los estudiantes de primer año",
+      "profesor": "M. García",
+      "horario": "Martes 9:00-11:00"
+    }
+  },
+  {
+    "nombre": "Lucía",
+    "apellido": "",
+    "materia": {
+      "codigo": "BIO205",
+      "descripcion": "Genética",
+      "año": "2024",
+      "nivel": "Intermedio",
+      "comentario": "Requiere trabajo en equipo",
+      "profesor": "Dra. López",
+      "horario": "Jueves 8:00-10:00",
+      "material": "Artículos científicos y videos"
+    }
+  },
+  {
+    "nombre": "Carlos",
+    "apellido": "",
+    "materia": {
+      "codigo": "FIS105",
+      "descripcion": "Física General",
+      "año": "2022",
+      "nivel": "Básico",
+      "comentario": "Prácticas semanales",
+      "profesor": "Dr. Pérez",
+      "horario": "Lunes 16:00-18:00"
+    }
+  },
+  {
+    
+    "apellido": "Hernández",
+    "materia": {
+      "codigo": "PSY108",
+      "descripcion": "Psicología Infantil",
+      "año": "2023",
+      "nivel": "Básico",
+      "comentario": "Sesiones interactivas",
+      "profesor": "M. Martínez",
+      "horario": "Viernes 10:00-12:00"
+    }
+  }
+]
