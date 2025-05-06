@@ -16,7 +16,7 @@ def extraer_valores_txt(path_txt='datos.txt'):
             val = re.sub(r'\s+', ' ', val).strip()
         return val
 
-    # Aplicamos la normalización a todos los valores
+    # Aplicamos la normalización a todos los valores en listas y diccionarios
     for seccion, lista in datos.items():
         if isinstance(lista, list):
             for elemento in lista:
@@ -29,6 +29,13 @@ def extraer_valores_txt(path_txt='datos.txt'):
                 valor_normalizado = normalizar_valor(lista[clave])
                 print(f"{seccion} - {clave}: {valor_normalizado}")
                 lista[clave] = valor_normalizado
+    
+    # Normalizar claves al nivel raíz que no son listas ni diccionarios
+    for clave in list(datos.keys()):
+        valor = datos[clave]
+        if not isinstance(valor, (list, dict)):
+            datos[clave] = normalizar_valor(valor)
+            print(f"raiz - {clave}: {datos[clave]}")
 
     return datos
 
@@ -55,6 +62,27 @@ def comparar_txt_con_pdf(path_txt='datos.txt', path_pdf='ley.pdf'):
     encontrados = set()
     no_encontrados = set()
 
+    # Comparar claves en la raíz del JSON
+    for clave, valor in datos.items():
+        if isinstance(valor, (list, dict)):
+            continue  # Ya se manejan más abajo
+
+        if valor == "" or valor is None:
+            no_encontrados.add(f"{clave}: {valor}")
+            continue
+
+        if isinstance(valor, int):
+            patron = rf"{clave}[:\s]*{valor}"
+        else:
+            patron = re.escape(str(valor))
+
+        match = re.search(rf'\b{patron}\b', texto_pdf, re.IGNORECASE)
+        if match:
+            encontrados.add(f"{clave}: {valor}")
+        else:
+            no_encontrados.add(f"{clave}: {valor}")
+
+    # Comparar claves dentro de listas y diccionarios
     for seccion, contenido in datos.items():
         if isinstance(contenido, list):
             for elemento in contenido:
