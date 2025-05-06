@@ -2,6 +2,7 @@
 import tkinter as tk
 from tkinter import scrolledtext
 from comparador import comparar_txt_con_pdf
+from graficador import graficar_resultados
 
 def mostrar_resultado_comparacion(text_widget):
     resultado = comparar_txt_con_pdf()
@@ -28,6 +29,14 @@ def mostrar_resultado_comparacion(text_widget):
     text_widget.insert(tk.END, f"- Valores NO encontrados en el PDF: {resultado['no_encontrados_count']}\n")
     text_widget.insert(tk.END, f"- Porcentaje de coincidencias: {resultado['porc_encontrados']:.1f}%\n")
     text_widget.insert(tk.END, f"- Porcentaje de no coincidencias: {resultado['porc_no_encontrados']:.1f}%\n")
+
+    # Llamada para graficar los resultados
+    graficar_resultados(
+        resultado['encontrados_count'],
+        resultado['no_encontrados_count'],
+        resultado['porc_encontrados'],
+        resultado['porc_no_encontrados']
+    )
 
 def crear_interfaz():
     ventana = tk.Tk()
