@@ -1,72 +1,43 @@
 # Punto de entrada (interfaz)
 import tkinter as tk
 from tkinter import scrolledtext
-from procesador import procesar_datos
-from graficador import graficar_datos
+from comparador import comparar_txt_con_pdf
 
-def mostrar_resultados(text_widget):
-    conteo, campos_principales, campos_materia_estaticos, otros_materia, otros_fuera = procesar_datos()
+def mostrar_resultado_comparacion(text_widget):
+    resultado = comparar_txt_con_pdf()
 
-    secciones = [
-        ("=== Estadísticas principales ===", campos_principales),
-        ("=== Campos en 'Materia' ===", campos_materia_estaticos)
-    ]
+    text_widget.insert(tk.END, "🔍 Resultados de la comparación:\n\n")
 
-    for titulo, campos in secciones:
-        text_widget.insert(tk.END, f"{titulo}\n")
-        for campo in campos:
-            estado = conteo[campo]
-            total = estado["lleno"] + estado["vacio"]
-            if total == 0:
-                continue
-            lleno_pct = (estado["lleno"] / total) * 100
-            vacio_pct = (estado["vacio"] / total) * 100
-            text_widget.insert(
-                tk.END,
-                f"{campo.upper()}: {total} campos - {lleno_pct:.1f}% lleno ({estado['lleno']} campos), "
-                f"{vacio_pct:.1f}% vacío ({estado['vacio']} campos)\n"
-            )
+    if resultado["no_encontrados"]:
+        text_widget.insert(tk.END, "❌ Valores del datos.txt NO encontrados en ley.pdf:\n")
+        for val in sorted(resultado["no_encontrados"]):
+            text_widget.insert(tk.END, f"- {val}\n")
+        text_widget.insert(tk.END, "\n")
+    else:
+        text_widget.insert(tk.END, "✅ Todos los valores del datos.txt se encontraron en el PDF.\n\n")
+
+    if resultado["encontrados"]:
+        text_widget.insert(tk.END, "✔️ Valores encontrados en el PDF:\n")
+        for val in sorted(resultado["encontrados"]):
+            text_widget.insert(tk.END, f"- {val}\n")
         text_widget.insert(tk.END, "\n")
 
-    text_widget.insert(tk.END, "=== Otros campos en 'materia' ===\n")
-    for campo, estado in otros_materia.items():
-        total = estado["lleno"] + estado["vacio"]
-        if total == 0:
-            continue
-        lleno_pct = (estado["lleno"] / total) * 100
-        vacio_pct = (estado["vacio"] / total) * 100
-        text_widget.insert(
-            tk.END,
-            f"{campo}: {total} campos - {lleno_pct:.1f}% lleno ({estado['lleno']} campos), "
-            f"{vacio_pct:.1f}% vacío ({estado['vacio']} campos)\n"
-        )
-
-    text_widget.insert(tk.END, "\n=== Otros campos fuera de 'materia' ===\n")
-    for campo, estado in otros_fuera.items():
-        total = estado["lleno"] + estado["vacio"]
-        if total == 0:
-            continue
-        lleno_pct = (estado["lleno"] / total) * 100
-        vacio_pct = (estado["vacio"] / total) * 100
-        text_widget.insert(
-            tk.END,
-            f"{campo}: {total} campos - {lleno_pct:.1f}% lleno ({estado['lleno']} campos), "
-            f"{vacio_pct:.1f}% vacío ({estado['vacio']} campos)\n"
-        )
-
-    # Gráfico con campos principales y materia
-    campos_interes = {c: conteo[c] for c in campos_principales + campos_materia_estaticos}
-    graficar_datos(campos_interes)
+    text_widget.insert(tk.END, "📊 Estadísticas:\n")
+    text_widget.insert(tk.END, f"- Total de valores del .txt analizados: {resultado['total']}\n")
+    text_widget.insert(tk.END, f"- Valores encontrados en el PDF: {resultado['encontrados_count']}\n")
+    text_widget.insert(tk.END, f"- Valores NO encontrados en el PDF: {resultado['no_encontrados_count']}\n")
+    text_widget.insert(tk.END, f"- Porcentaje de coincidencias: {resultado['porc_encontrados']:.1f}%\n")
+    text_widget.insert(tk.END, f"- Porcentaje de no coincidencias: {resultado['porc_no_encontrados']:.1f}%\n")
 
 def crear_interfaz():
     ventana = tk.Tk()
-    ventana.title("Estadísticas de Campos")
-    ventana.geometry("700x600")
+    ventana.title("Comparador de datos contra PDF")
+    ventana.geometry("800x600")
 
-    text_widget = scrolledtext.ScrolledText(ventana, wrap=tk.WORD, width=80, height=35)
+    text_widget = scrolledtext.ScrolledText(ventana, wrap=tk.WORD, width=100, height=35)
     text_widget.pack(padx=10, pady=10)
 
-    mostrar_resultados(text_widget)
+    mostrar_resultado_comparacion(text_widget)
 
     ventana.mainloop()
 

@@ -1,151 +1,57 @@
-[
-  {
-    "nombre": "Juan",
-    "apellido": "PÈrez",
-    "materia": {
-      "codigo": "MAT101",
-      "descripcion": "Matem·tica b·sica",
-      "aÒo": "2022",
-      "nivel": "B·sico",
-      "comentario": "Requiere trabajo pr·ctico",
-      "profesor": "Dr. RodrÌguez",
-      "horario": "Lunes y MiÈrcoles 10:00-12:00"
+Ôªø{
+  "proceso_id": 23267,
+  "estado": "PROCESANDO",
+  "clave": "2C1101_GXP_22876_14",
+  "sis_codigo": "iurixcl",
+  "entidad_codigo": "legajos",
+  "motivo_col": "VISTA",
+  "fecha_rad": 151124,
+  "fecha_control": 152808,
+  "fecha_aud": "154624043680",
+  "fecha_alta": "20-08-2024 09:25:42",
+  "motivo_act": "CLAVE_NUEVA",
+  "legajo_cabecera": {
+    "nivel_acceso": "PUBLICO",
+    "exp_org_creador": "2C1101",
+    "tipo": "GXP",
+    "numero": 22876,
+    "anio": 14,
+    "caratula": "  CH√ÅVEZ NILDA POR         VER√ìN SARA  ANTONIA S/   PROTECCI√ìN DE PERSONAS   ",
+    "org_radicacion": "2C1101",
+    "secre_codigo": "2CS101",
+    "fecha_radicacion": {
+      "$date": "2014-10-06T00:00:00.000Z"
     }
   },
-  {
-    "nombre": "",
-    "apellido": "GÛmez",
-    "materia": {
-      "codigo": "",
-      "descripcion": "",
-      "nivel": "",
-      "comentario": "Requiere conocimientos previos",
-      "profesor": "M. LÛpez",
-      "horario": "Martes y Jueves 14:00-16:00",
-      "aÒo": ""
+  "legajo_partes": [
+    {
+      "vinculo_codigo": "ACT",
+      "vinculo_descripcion": "ACTOR",
+      "nombrecompleto": "CH√ÅVEZ NILDA",
+      "NOMBRE": "CH√ÅVEZ",
+      "APELLIDO": "NILDA",
+      "documento": "DNI-115647847",
+      "sexo": 0,
+      "tipo_documento": "DNI",
+      "documento_numero": "115647847"
     }
-  },
-  {
-    "nombre": "LucÌa",
-    "apellido": "",
-    "materia": {
-      "codigo": "HIS201",
-      "descripcion": "Historia Argentina",
-      "comentario": "",
-      "profesor": "",
-      "horario": "Viernes 9:00-11:00",
-      "salon": "A",
-      "nivel": "Intermedio"
+  ],
+  "legajo_abogados": [
+    {
+      "vinculo_codigo": "PAT",
+      "vinculo_descripcion": "PATROCINANTE",
+      "matricula": "1000000",
+      "profesional_nombre": "JUAN",
+      "profesional_apellido": "GOMEZ",
+      "cuit": "",
+      "persona_respresentada_nombre": "NEWMAN NILDA",
+      "persona_respresentada_documento": "DNI-24372736"
     }
-  },
-  {
-    "nombre": "",
-    "apellido": "",
-    "materia": {
-      "codigo": "FIS303",
-      "descripcion": "FÌsica avanzada",
-      "aÒo": "2022",
-      "nivel": "",
-      "comentario": "",
-      "profesor": "Dr. GarcÌa",
-      "horario": "Jueves 16:00-18:00",
-      "ubicacion": "Lavalle 50"
-    }
-  },
-  {
-    "nombre": "Ana",
-    "apellido": "S·nchez",
-    "materia": {
-      "codigo": "BIO150",
-      "descripcion": "",
-      "aÒo": "2023",
-      "nivel": "B·sico",
-      "comentario": "Se recomienda asistir a clases pr·cticas",
-      "profesor": "M. PÈrez",
-      "horario": "Lunes 8:00-10:00",
-      "material": "Manual de BiologÌa",
-      "director": "thiago f"
-    }
-  },
-  {
-    "nombre": "Pedro",
-    "apellido": "Gonz·lez",
-    "materia": {
-      "codigo": "MAT201",
-      "descripcion": "C·lculo Diferencial",
-      "aÒo": "2023",
-      "nivel": "Intermedio",
-      "comentario": "Es necesario tener conocimientos previos de ·lgebra",
-      "profesor": "Dr. Fern·ndez",
-      "horario": "Lunes 14:00-16:00",
-      "material": ""
-    }
-  },
-  {
-    "nombre": "MarÌa",
-    "apellido": "",
-    "materia": {
-      "codigo": "QUI301",
-      "descripcion": "QuÌmica Org·nica",
-      "aÒo": "2022",
-      "nivel": "Avanzado",
-      "comentario": "Laboratorio obligatorio",
-      "profesor": "Dr. RamÌrez",
-      "horario": "MiÈrcoles y Viernes 11:00-13:00"
-    }
-  },
-  {
-    "nombre": "",
-    "apellido": "RodrÌguez",
-    "materia": {
-      "codigo": "",
-      "descripcion": "",
-      "aÒo": "2023",
-      "nivel": "B·sico",
-      "comentario": "Para todos los estudiantes de primer aÒo",
-      "profesor": "M. GarcÌa",
-      "horario": "Martes 9:00-11:00"
-    }
-  },
-  {
-    "nombre": "LucÌa",
-    "apellido": "",
-    "materia": {
-      "codigo": "BIO205",
-      "descripcion": "GenÈtica",
-      "aÒo": "2024",
-      "nivel": "Intermedio",
-      "comentario": "Requiere trabajo en equipo",
-      "profesor": "Dra. LÛpez",
-      "horario": "Jueves 8:00-10:00",
-      "material": "ArtÌculos cientÌficos y videos"
-    }
-  },
-  {
-    "nombre": "Carlos",
-    "apellido": "",
-    "carrera": "Ing. en Sistemas",
-    "materia": {
-      "codigo": "FIS105",
-      "descripcion": "FÌsica General",
-      "aÒo": "2022",
-      "nivel": "B·sico",
-      "comentario": "Pr·cticas semanales",
-      "profesor": "Dr. PÈrez",
-      "horario": "Lunes 16:00-18:00"
-    }
-  },
-  {
-    
-    "apellido": "Hern·ndez",
-    "materia": {
-      "codigo": "PSY108",
-      "descripcion": "PsicologÌa Infantil",
-      "aÒo": "2023",
-      "nivel": "B·sico",
-      "comentario": "Sesiones interactivas",
-      "profesor": "M. MartÌnez",
-      "horario": "Viernes 10:00-12:00"
-    }
-  }
-]
+  ],
+  "tipo": "GXP",
+  "anio": 14,
+  "numero": 22876,
+  "exp_org_creador": "2C1101",
+  "org_radicacion": "2C1101",
+  "secre_codigo": "2CS101"
+}
