@@ -15,26 +15,35 @@ def mostrar_resultado_comparacion(text_widget):
             text_widget.insert(tk.END, f"- {val}\n")
         text_widget.insert(tk.END, "\n")
     else:
-        text_widget.insert(tk.END, "✅ Todos los valores del datos.txt se encontraron en el PDF.\n\n")
+        text_widget.insert(tk.END, "✅ Todos los valores fueron encontrados en el PDF (sin omisiones).\n\n")
+
+    if resultado["similares"]:
+        text_widget.insert(tk.END, "🔶 Valores con coincidencia aproximada en el PDF:\n")
+        for val in sorted(resultado["similares"]):
+            text_widget.insert(tk.END, f"- {val}\n")
+        text_widget.insert(tk.END, "\n")
 
     if resultado["encontrados"]:
-        text_widget.insert(tk.END, "✔️ Valores encontrados en el PDF:\n")
+        text_widget.insert(tk.END, "✔️ Valores encontrados exactamente en el PDF:\n")
         for val in sorted(resultado["encontrados"]):
             text_widget.insert(tk.END, f"- {val}\n")
         text_widget.insert(tk.END, "\n")
 
     text_widget.insert(tk.END, "📊 Estadísticas:\n")
     text_widget.insert(tk.END, f"- Total de valores del .txt analizados: {resultado['total']}\n")
-    text_widget.insert(tk.END, f"- Valores encontrados en el PDF: {resultado['encontrados_count']}\n")
-    text_widget.insert(tk.END, f"- Valores NO encontrados en el PDF: {resultado['no_encontrados_count']}\n")
-    text_widget.insert(tk.END, f"- Porcentaje de coincidencias: {resultado['porc_encontrados']:.1f}%\n")
+    text_widget.insert(tk.END, f"- Valores encontrados exactamente: {resultado['encontrados_count']}\n")
+    text_widget.insert(tk.END, f"- Valores con coincidencia aproximada: {resultado['similares_count']}\n")
+    text_widget.insert(tk.END, f"- Valores NO encontrados: {resultado['no_encontrados_count']}\n")
+    text_widget.insert(tk.END, f"- Porcentaje de coincidencias exactas: {resultado['porc_encontrados']:.1f}%\n")
+    text_widget.insert(tk.END, f"- Porcentaje de coincidencias aproximadas: {resultado['porc_similares']:.1f}%\n")
     text_widget.insert(tk.END, f"- Porcentaje de no coincidencias: {resultado['porc_no_encontrados']:.1f}%\n")
 
-    # Llamada para graficar los resultados
     graficar_resultados(
         resultado['encontrados_count'],
+        resultado['similares_count'],
         resultado['no_encontrados_count'],
         resultado['porc_encontrados'],
+        resultado['porc_similares'],
         resultado['porc_no_encontrados']
     )
 

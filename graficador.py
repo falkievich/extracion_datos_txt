@@ -1,41 +1,30 @@
 import matplotlib.pyplot as plt
 
-def graficar_resultados(encontrados_count, no_encontrados_count, porc_encontrados, porc_no_encontrados):
-    categorias = ['Encontrados', 'No encontrados']
-    valores_absolutos = [encontrados_count, no_encontrados_count]
-    valores_porcentajes = [porc_encontrados, porc_no_encontrados]
+def graficar_resultados(encontrados_count, similares_count, no_encontrados_count,
+                        porc_encontrados, porc_similares, porc_no_encontrados):
+    categorias = [
+        f"{encontrados_count} valores encontrados exactamente\n({porc_encontrados:.1f}%)",
+        f"{similares_count} valores con coincidencia aproximada\n({porc_similares:.1f}%)",
+        f"{no_encontrados_count} valores no encontrados\n({porc_no_encontrados:.1f}%)"
+    ]
+    porcentajes = [porc_encontrados, porc_similares, porc_no_encontrados]
 
-    fig, ax1 = plt.subplots(figsize=(8, 6))
-
-    # Posición de las barras
+    fig, ax = plt.subplots(figsize=(10, 6))
     x = range(len(categorias))
 
-    # Barra de cantidad (eje izquierdo)
-    barras1 = ax1.bar(x, valores_absolutos, width=0.4, label='Cantidad', color=['green', 'red'])
-    ax1.set_ylabel('Cantidad', color='black')
-    ax1.set_ylim(0, max(valores_absolutos) + 5)
+    barras = ax.bar(x, porcentajes, width=0.6)
+    ax.set_ylim(0, 100)
+    ax.set_ylabel('Porcentaje (%)')
+    ax.set_xticks(x)
+    # Rotación 0 para etiquetas horizontales
+    ax.set_xticklabels(categorias, rotation=0, ha='center')
+    ax.set_title('Comparación de valores: exactos, aproximados y no encontrados')
 
-    # Eje secundario para porcentaje
-    ax2 = ax1.twinx()
-    barras2 = ax2.bar([i + 0.4 for i in x], valores_porcentajes, width=0.4, label='Porcentaje', color=['blue', 'orange'])
-    ax2.set_ylabel('Porcentaje (%)', color='black')
-    ax2.set_ylim(0, 100)
-
-    # Etiquetas sobre las barras
-    for i, v in enumerate(valores_absolutos):
-        ax1.text(i, v + 0.5, str(v), ha='center', fontweight='bold')
-    for i, v in enumerate(valores_porcentajes):
-        ax2.text(i + 0.4, v + 1, f"{v:.1f}%", ha='center', fontweight='bold')
-
-    # Títulos y etiquetas
-    ax1.set_xticks([i + 0.2 for i in x])
-    ax1.set_xticklabels(categorias)
-    plt.title('Valores encontrados vs no encontrados\n(cantidad y porcentaje)')
-
-    # Leyenda combinada
-    handles1, labels1 = ax1.get_legend_handles_labels()
-    handles2, labels2 = ax2.get_legend_handles_labels()
-    plt.legend(handles1 + handles2, labels1 + labels2, loc='upper right')
+    # Etiquetas de porcentaje sobre cada barra
+    for bar, pct in zip(barras, porcentajes):
+        height = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width()/2, height + 1,
+                f"{pct:.1f}%", ha='center', fontweight='bold')
 
     plt.tight_layout()
     plt.show()
