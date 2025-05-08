@@ -74,29 +74,19 @@ def comparar_txt_con_pdf(path_txt='datos.txt', path_pdf='ley.pdf'):
             no_encontrados.add(f"{clave}: {valor}")
             return
 
-        patron = re.escape(str(valor))
-        valor_normalizado = normalizar_acentos(str(valor)).lower()
+        txt_str = str(valor)
+        valor_normalizado = normalizar_acentos(txt_str).lower()
+        patron = re.escape(txt_str)
 
         # Búsqueda exacta
         match = re.search(rf'\b{patron}\b', texto_pdf, re.IGNORECASE)
         if match:
             encontrados.add(f"{clave}: {valor}")
         else:
-            # Búsqueda aproximada sobre texto normalizado
-            match = re.search(rf'\b{re.escape(valor_normalizado)}\b',
-            texto_pdf_normalizado, re.IGNORECASE)
-            if match:
-               # Guardo el fragmento normalizado que se encontró en el PDF
-               valor_pdf = match.group().strip()
-               similares[clave] = (valor, valor_pdf)
-            else:
-                no_encontrados.add(f"{clave}: {valor}")
-
-            # 1) buscamos sobre el texto normalizado
-            match_norm = re.search(rf'\b{re.escape(valor_normalizado)}\b',
-                                    texto_pdf_normalizado, re.IGNORECASE)
+            # 1) coincidencia simple en texto normalizado
+            match_norm = re.search(rf'\b{re.escape(valor_normalizado)}\b', texto_pdf_normalizado, re.IGNORECASE)
             if match_norm:
-                # 2) si hay, construyo un patrón que acepte acentos
+                # Construyo patrón que admita acentos y busco en el PDF original
                 accent_map = {
                     'a':'[aáàäâãÁÀÄÂÃ]',
                     'e':'[eéèëêÉÈËÊ]',
@@ -110,11 +100,43 @@ def comparar_txt_con_pdf(path_txt='datos.txt', path_pdf='ley.pdf'):
 
                 pat_pdf = ''.join(cls(c) for c in valor_normalizado)
                 pat_pdf = rf'\b{pat_pdf}\b'
-                m_pdf = re.search(pat_pdf, texto_pdf, re.IGNORECASE)
-                valor_pdf = m_pdf.group().strip() if m_pdf else valor
+                m_raw = re.search(pat_pdf, texto_pdf, re.IGNORECASE)
+                valor_pdf = m_raw.group().strip() if m_raw else match_norm.group().strip()
                 similares[clave] = (valor, valor_pdf)
             else:
-                no_encontrados.add(f"{clave}: {valor}")
+                # 2) regla pluralidad: s/es final
+                stem = re.sub(r'(es|s)$', '', valor_normalizado)
+                pat_plural = rf'\b{stem}(?:es|s)\b'
+                if re.search(pat_plural, texto_pdf_normalizado):
+                    found = re.search(pat_plural, texto_pdf_normalizado).group().strip()
+                    # extraigo versión original con acentos
+                    pat_raw = ''.join(cls(c) for c in re.sub(r'(es|s)$', '', valor_normalizado))
+                    pat_raw = rf'\b{pat_raw}(?:es|s)\b'
+                    m_raw = re.search(pat_raw, texto_pdf, re.IGNORECASE)
+                    similares[clave] = (valor, m_raw.group().strip() if m_raw else found)
+                else:
+                    # 3) regla acentos ción/ciones y ía/ías
+                    stem1 = re.sub(r'(ciones|cion|ías|ia)$', '', valor_normalizado)
+                    pat_deriv = rf'\b{stem1}(?:ciones|cion|ías|ia)\b'
+                    if re.search(pat_deriv, texto_pdf_normalizado):
+                        found = re.search(pat_deriv, texto_pdf_normalizado).group().strip()
+                        # extraigo la versión original
+                        pat_raw = ''.join(cls(c) for c in stem1)
+                        pat_raw = rf'\b{pat_raw}(?:ciones|cion|ías|ia)\b'
+                        m_raw = re.search(pat_raw, texto_pdf, re.IGNORECASE)
+                        similares[clave] = (valor, m_raw.group().strip() if m_raw else found)
+                    else:
+                        # 4) regla dígitos con separadores
+                        digits = re.sub(r'\D', '', txt_str)
+                        if digits:
+                            pat_dig = r'\b' + r'\D{0,3}'.join(list(digits)) + r'\b' #Corroborar que no rompa nada
+                            if re.search(pat_dig, texto_pdf):
+                                found = re.search(pat_dig, texto_pdf).group().strip()
+                                similares[clave] = (valor, found)
+                            else:
+                                no_encontrados.add(f"{clave}: {valor}")
+                        else:
+                            no_encontrados.add(f"{clave}: {valor}")
 
     # Claves en la raíz
     for clave, valor in datos.items():
