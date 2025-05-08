@@ -86,9 +86,33 @@ def comparar_txt_con_pdf(path_txt='datos.txt', path_pdf='ley.pdf'):
             match = re.search(rf'\b{re.escape(valor_normalizado)}\b',
             texto_pdf_normalizado, re.IGNORECASE)
             if match:
-               # guardo también el fragmento normalizado que se encontró en el PDF
+               # Guardo el fragmento normalizado que se encontró en el PDF
                valor_pdf = match.group().strip()
                similares[clave] = (valor, valor_pdf)
+            else:
+                no_encontrados.add(f"{clave}: {valor}")
+
+            # 1) buscamos sobre el texto normalizado
+            match_norm = re.search(rf'\b{re.escape(valor_normalizado)}\b',
+                                    texto_pdf_normalizado, re.IGNORECASE)
+            if match_norm:
+                # 2) si hay, construyo un patrón que acepte acentos
+                accent_map = {
+                    'a':'[aáàäâãÁÀÄÂÃ]',
+                    'e':'[eéèëêÉÈËÊ]',
+                    'i':'[iíìïîÍÌÏÎ]',
+                    'o':'[oóòöôõÓÒÖÔÕ]',
+                    'u':'[uúùüûÚÙÜÛ]',
+                    'n':'[nñÑ]'
+                }
+                def cls(c):
+                    return accent_map.get(c.lower(), re.escape(c))
+
+                pat_pdf = ''.join(cls(c) for c in valor_normalizado)
+                pat_pdf = rf'\b{pat_pdf}\b'
+                m_pdf = re.search(pat_pdf, texto_pdf, re.IGNORECASE)
+                valor_pdf = m_pdf.group().strip() if m_pdf else valor
+                similares[clave] = (valor, valor_pdf)
             else:
                 no_encontrados.add(f"{clave}: {valor}")
 
