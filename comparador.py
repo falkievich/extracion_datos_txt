@@ -66,7 +66,7 @@ def comparar_txt_con_pdf(path_txt='datos.txt', path_pdf='ley.pdf'):
 
     encontrados = set()
     no_encontrados = set()
-    similares = set()
+    similares = {} # diccionario: clave -> (valor_txt, valor_pdf)
 
     def verificar_valor(clave, valor):
         # Si el valor es Null o vacío, lo consideramos no encontrado
@@ -82,9 +82,13 @@ def comparar_txt_con_pdf(path_txt='datos.txt', path_pdf='ley.pdf'):
         if match:
             encontrados.add(f"{clave}: {valor}")
         else:
-            # Búsqueda por coincidencia aproximada
-            if re.search(rf'\b{re.escape(valor_normalizado)}\b', texto_pdf_normalizado, re.IGNORECASE):
-                similares.add(f"{clave}: {valor}")
+            # Búsqueda aproximada sobre texto normalizado
+            match = re.search(rf'\b{re.escape(valor_normalizado)}\b',
+            texto_pdf_normalizado, re.IGNORECASE)
+            if match:
+               # guardo también el fragmento normalizado que se encontró en el PDF
+               valor_pdf = match.group().strip()
+               similares[clave] = (valor, valor_pdf)
             else:
                 no_encontrados.add(f"{clave}: {valor}")
 

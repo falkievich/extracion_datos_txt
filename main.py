@@ -19,8 +19,11 @@ def mostrar_resultado_comparacion(text_widget):
 
     if resultado["similares"]:
         text_widget.insert(tk.END, "🔶 Valores con coincidencia aproximada en el PDF:\n")
-        for val in sorted(resultado["similares"]):
-            text_widget.insert(tk.END, f"- {val}\n")
+        for campo, (txt_val, pdf_val) in sorted(resultado["similares"].items()):
+            text_widget.insert(
+                tk.END,
+                f"- {campo}: {txt_val}  →  Como aparece en el PDF: {pdf_val}\n"
+            )
         text_widget.insert(tk.END, "\n")
 
     if resultado["encontrados"]:
