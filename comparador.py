@@ -28,12 +28,12 @@ def extraer_valores_txt(path_txt='datos.txt'):
             for elemento in lista:
                 for clave in list(elemento.keys()):
                     valor_normalizado = normalizar_valor(elemento[clave])
-                    print(f"{seccion} - {clave}: {valor_normalizado}")
+                    #print(f"{seccion} - {clave}: {valor_normalizado}")
                     elemento[clave] = valor_normalizado
         elif isinstance(lista, dict):
             for clave in list(lista.keys()):
                 valor_normalizado = normalizar_valor(lista[clave])
-                print(f"{seccion} - {clave}: {valor_normalizado}")
+                #print(f"{seccion} - {clave}: {valor_normalizado}")
                 lista[clave] = valor_normalizado
     
     # Normalizar claves al nivel raíz que no son listas ni diccionarios
@@ -41,7 +41,7 @@ def extraer_valores_txt(path_txt='datos.txt'):
         valor = datos[clave]
         if not isinstance(valor, (list, dict)):
             datos[clave] = normalizar_valor(valor)
-            print(f"raiz - {clave}: {datos[clave]}")
+            #print(f"raiz - {clave}: {datos[clave]}")
 
     return datos
 
@@ -62,7 +62,7 @@ def comparar_txt_con_pdf(path_txt='datos.txt', path_pdf='ley.pdf'):
     texto_pdf = extraer_texto_pdf(path_pdf)
     texto_pdf_normalizado = normalizar_acentos(texto_pdf).lower()
 
-    print("\nPDF:", texto_pdf)
+    #print("\nPDF:", texto_pdf)
 
     encontrados = set()
     no_encontrados = set()

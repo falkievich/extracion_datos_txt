@@ -7,7 +7,18 @@ from tkinter import scrolledtext
 from comparador import comparar_txt_con_pdf
 from graficador import graficar_resultados
 from exporter import exportar_resultados, mostrar_resultado_comparacion
+from fastapi import FastAPI
 
+#---------------------------------------------------------- Imports routes
+from backend.routes.upload_documents_route import router as upload_documents_route
+
+#---------------------------------------------------------- FastAPI
+app = FastAPI()
+
+#---------------------------------------------------------- Include routes
+app.include_router(upload_documents_route, prefix="/api")
+
+#---------------------------------------------------------- 
 
 def crear_interfaz():
     ventana = tk.Tk()
